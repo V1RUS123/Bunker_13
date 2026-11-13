@@ -1,18 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bunker 13</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { background: #000; color: #32CD32; font-family: monospace; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-        .screen { border: 2px solid #32CD32; padding: 20px; box-shadow: 0 0 15px #32CD32; }
-        h1 { text-transform: uppercase; letter-spacing: 5px; }
+        body { background: #121212; color: #ffcc00; font-family: 'Courier New', monospace; padding: 20px; margin: 0; text-align: center; }
+        .stat-bar { display: flex; justify-content: space-around; background: #222; padding: 10px; border: 2px solid #ffcc00; margin-bottom: 20px; }
+        .res { font-size: 14px; }
+        .bunker-view { height: 200px; border: 2px dashed #444; margin: 20px 0; display: flex; align-items: center; justify-content: center; background: #1a1a1a; }
+        .btn { background: #ffcc00; color: #000; padding: 15px 30px; border: none; font-weight: bold; cursor: pointer; width: 100%; border-radius: 5px; }
+        .log { background: #000; color: #00ff00; height: 100px; overflow-y: scroll; text-align: left; padding: 10px; font-size: 12px; border: 1px solid #333; }
     </style>
 </head>
 <body>
-    <div class="screen">
-        <h1>Bunker 13: Online</h1>
-        <p>System: Radioactive level High...</p>
-        <p>Status: Waiting for Commander...</p>
+
+    <div class="stat-bar">
+        <div class="res">🍖 ЕДА: <span id="food">10</span></div>
+        <div class="res">💧 ВОДА: <span id="water">10</span></div>
+        <div class="res">🔫 ПАТРОНЫ: <span id="ammo">5</span></div>
     </div>
+
+    <div class="bunker-view">
+        [ ОГСЕК БУНКЕРА #13 ]
+    </div>
+
+    <div class="log" id="gameLog">
+        > Система запущена...<br>
+        > Радиационный фон в норме...
+    </div>
+
+    <br>
+    <button class="btn" onclick="startRaid()">ОТПРАВИТЬСЯ В РЕЙД</button>
+
+    <script>
+        let food = 10;
+        const log = document.getElementById('gameLog');
+
+        function startRaid() {
+            let found = Math.floor(Math.random() * 5);
+            food += found;
+            document.getElementById('food').innerText = food;
+            
+            let newLog = document.createElement('div');
+            newLog.innerHTML = `> Ты нашел ${found} ед. еды в пустоши.`;
+            log.prepend(newLog);
+        }
+
+        // Сообщаем телеге, что приложение готово
+        window.Telegram.WebApp.ready();
+    </script>
 </body>
-</html> 
+</html>
